@@ -36,3 +36,32 @@ window.addEventListener("scroll", () => {
     header.classList.remove("scroll");
   }
 });
+
+/* TESTIMONIALS CAROCEL */
+
+const swiper = new Swiper('.swiper', {
+  slidesPerView: 1,
+  pagination: {
+    el: '.swiper-pagination'
+  },
+  mousewheel: true,
+  keyboard: true
+});
+
+/* SCROLREVEAL: MOSTRAR ELEMENTOS NA PAGINA QUANDO DER SCROLL */
+const scrollReveal = ScrollReveal({
+  origin: 'top',
+  distance: '30px',
+  duration: 700,
+  reset: true
+})
+
+scrollReveal.reveal(
+  `#home .text, #home .image,
+  #about .image, #about .text,
+  #services header, #sercices .card,
+  #testimonials header, #testimonials .testimonials,
+  #contact .text, #contact .links
+  `,
+  { interval: 100 }
+)
