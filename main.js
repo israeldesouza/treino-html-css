@@ -21,13 +21,10 @@ for (const link of links) {
 }
 
 /* MUDAR O HEADER DA PAGINA QUANDO DER SCROLL */
+function changeHeaderWhenScroll(){
+  const header = document.querySelector("#header");
+  const navHeigth = header.offsetHeight;
 
-const header = document.querySelector("#header");
-const navHeigth = header.offsetHeight;
-
-window.addEventListener("scroll", () => {
-    //console.log(navHeigth);
-    console.log();
   if (window.scrollY >= navHeigth) {
     //SCROLL É MAIOR QUE A ALTURA DO HEADER
     header.classList.add("scroll");
@@ -35,7 +32,7 @@ window.addEventListener("scroll", () => {
     //SCROLL MENOR QUE A ALTURA DO HEADER
     header.classList.remove("scroll");
   }
-});
+}
 
 /* TESTIMONIALS CAROCEL */
 
@@ -61,7 +58,22 @@ scrollReveal.reveal(
   #about .image, #about .text,
   #services header, #sercices .card,
   #testimonials header, #testimonials .testimonials,
-  #contact .text, #contact .links
+  #contact .text, #contact .links,
+  footer .brand, footer .social
   `,
   { interval: 100 }
 )
+
+/* BUTTON BACK TO TOP */
+function backToTop () {
+  const backToTopButton = document.querySelector('.back-to-top');
+  if( window.scrollY >= 560) backToTopButton.classList.add('show');
+  else backToTopButton.classList.remove('show');
+}
+
+/* WHEN SCROLL*/
+window.addEventListener("scroll", () => {
+  changeHeaderWhenScroll();
+  backToTop();
+});
+
