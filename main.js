@@ -21,8 +21,8 @@ for (const link of links) {
 }
 
 /* MUDAR O HEADER DA PAGINA QUANDO DER SCROLL */
-function changeHeaderWhenScroll(){
-  const header = document.querySelector("#header");
+const header = document.querySelector("#header");
+function changeHeaderWhenScroll() {
   const navHeigth = header.offsetHeight;
 
   if (window.scrollY >= navHeigth) {
@@ -36,22 +36,28 @@ function changeHeaderWhenScroll(){
 
 /* TESTIMONIALS CAROCEL */
 
-const swiper = new Swiper('.swiper', {
+const swiper = new Swiper(".swiper", {
   slidesPerView: 1,
   pagination: {
-    el: '.swiper-pagination'
+    el: ".swiper-pagination",
   },
   mousewheel: true,
-  keyboard: true
+  keyboard: true,
+  breakpoints: {
+    767: {
+      slidesPerView: 2,
+      setWrapperSize: true,
+    },
+  },
 });
 
 /* SCROLREVEAL: MOSTRAR ELEMENTOS NA PAGINA QUANDO DER SCROLL */
 const scrollReveal = ScrollReveal({
-  origin: 'top',
-  distance: '30px',
+  origin: "top",
+  distance: "30px",
   duration: 700,
-  reset: true
-})
+  reset: true,
+});
 
 scrollReveal.reveal(
   `#home .text, #home .image,
@@ -62,18 +68,43 @@ scrollReveal.reveal(
   footer .brand, footer .social
   `,
   { interval: 100 }
-)
+);
 
 /* BUTTON BACK TO TOP */
-function backToTop () {
-  const backToTopButton = document.querySelector('.back-to-top');
-  if( window.scrollY >= 560) backToTopButton.classList.add('show');
-  else backToTopButton.classList.remove('show');
+const backToTopButton = document.querySelector(".back-to-top");
+function backToTop() {
+  if (window.scrollY >= 560) backToTopButton.classList.add("show");
+  else backToTopButton.classList.remove("show");
+}
+
+/* MENU HOVER ACTIVE */
+const sections = document.querySelectorAll("main section[id]");
+function activateMenuAtCurrentSelection() {
+  const checkpoint = window.pageYOffset + (window.innerHeight / 8) * 4;
+
+  for (const section of sections) {
+    const sectionTop = section.offsetTop;
+    const sectionHeight = section.offsetHeight;
+    const sectionId = section.getAttribute("id");
+
+    const checkpointStart = checkpoint >= sectionTop;
+    const checkpointEnd = checkpoint <= sectionTop + sectionHeight;
+
+    if (checkpointStart && checkpointEnd) {
+      document
+        .querySelector("nav ul li a[href*=" + sectionId + "]")
+        .classList.add("active");
+    } else {
+      document
+        .querySelector("nav ul li a[href*=" + sectionId + "]")
+        .classList.remove("active");
+    }
+  }
 }
 
 /* WHEN SCROLL*/
 window.addEventListener("scroll", () => {
   changeHeaderWhenScroll();
   backToTop();
+  activateMenuAtCurrentSelection();
 });
-
